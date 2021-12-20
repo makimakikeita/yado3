@@ -1,0 +1,42 @@
+<p>
+<%= image_tag "yado.jpeg", class: 'img' %>
+<h2>九州のおすすめ温泉宿を検索できます</h2>
+<%= link_to 'ログアウト', top_logout_path %><br><hr>
+
+   <br>
+</p>
+    <%= image_tag "/get_image/#{@hotel.id}" , class: 'image' %><br>
+
+<p>
+   温泉宿:<%= @hotel.hname %><br>
+    <strong>所在地</strong>
+    <%= @hotel.place %>県
+    <br>
+    <strong>値段</strong>
+    1泊 / <%= @hotel.price %>円<br>
+    <strong>旅館からのコメント</strong>
+    <br>
+    <%= @hotel.comment %>
+    <br>
+    </p>
+    
+    <p>
+    <strong>お客様の声</strong>
+    <br>
+    <% @hotel.reviews.each do |e| %>
+        <p>
+            コメント: <%= e.rcomment %>, 
+            評価: <%= e.star %>, 
+            投稿者: <%= Tourist.find(e.tourist_id).name %>
+            <% if e.tourist_id == current_tourist.id %>
+                <%= link_to '削除' , review_path(e), method: :delete %>
+            <% end %>
+        </p>
+    <% end %>
+</p>
+<hr>
+<p>
+    <%= link_to 'レビューを投稿する', new_review_path(hotel_id: @hotel.id) %>
+</p>
+    <%= link_to 'TOPに戻る', :action => 'index' %>
+</p>
